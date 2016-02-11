@@ -12,6 +12,10 @@ namespace tvShowDemoSite.Models
     class ShowModel
     {
         /// <summary>
+        /// Unique identifier for the show. 
+        /// </summary>
+        string Id { get; }
+        /// <summary>
         /// Official title of the show, upon original release.
         /// </summary>
         string Title { get; set; }
