@@ -14,7 +14,7 @@ namespace tvShowDemoSite.Models
         /// <summary>
         /// Unique identifier for the show. 
         /// </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         
         /// <summary>
         /// Official title of the show, upon original release.
