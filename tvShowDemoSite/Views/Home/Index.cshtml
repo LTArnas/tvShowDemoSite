@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+@model List<tvShowDemoSite.Models.ShowModel>
 <!DOCTYPE html>
 
 <html>
@@ -10,6 +10,19 @@
     <title></title>
 </head>
 <body>
-    <h1>Test successful!</h1>
+    <h1>Test page! Listing databse:</h1>
+    <ol>
+        @{ 
+            foreach (tvShowDemoSite.Models.ShowModel show in Model)
+            {
+                <li>
+                    <p>
+                        ID: @show.Id; <br />
+                        Title: @show.Title <br />
+                    </p>
+                </li>
+            }
+        }
+    </ol>
 </body>
 </html>
