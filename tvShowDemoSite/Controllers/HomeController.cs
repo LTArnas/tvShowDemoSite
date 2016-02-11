@@ -19,12 +19,12 @@ namespace tvShowDemoSite.Controllers
             return View(shows);
         }
 
-        public ActionResult Add(string name)
+        public ActionResult Add(string id)
         {
             ShowRepository repo = new ShowRepository();
             ShowModel show = new ShowModel();
             show.Id = ShowRepository.GenerateId();
-            show.Title = name;
+            show.Title = id;
             return View(show);
         }
     }
