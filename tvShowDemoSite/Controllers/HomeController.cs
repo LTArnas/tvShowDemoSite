@@ -25,6 +25,7 @@ namespace tvShowDemoSite.Controllers
             ShowModel show = new ShowModel();
             show.Id = ShowRepository.GenerateId();
             show.Title = id;
+            repo.Insert(show);
             return View(show);
         }
     }
