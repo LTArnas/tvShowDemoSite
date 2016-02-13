@@ -10,6 +10,7 @@ namespace tvShowDemoSite.Controllers
 {
     public class ShowController : Controller
     {
+        // TODO: ensure proper AntiForgeryToken usage.
         // TODO: add default Index() action ...prolly just redirect home.
         // TODO: add show repo here.
         // TODO: add common/standard viewbag variables here (ViewBag.Success = false;) 
