@@ -53,5 +53,15 @@ namespace tvShowDemoSite.DAL
             // TODO: Consider applying a max value cap for count argument.
             return collection.AsQueryable().Where(predicate).Take(count).ToList();
         }
+
+        public void Replace(ShowModel show)
+        {
+            collection.ReplaceOne(x => x.Id == show.Id, show);
+        }
+
+        public void Delete(string id)
+        {
+            collection.DeleteOne(x => x.Id == id);
+        }
     }
 }
