@@ -14,6 +14,7 @@ namespace tvShowDemoSite.Controllers
         public ActionResult Index()
         {
             ShowRepository repo = new ShowRepository();
+            
             List<ShowModel> shows = repo.Find(x => x.Title != null, 100);
 
             return View(shows);

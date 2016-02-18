@@ -10,10 +10,15 @@ namespace tvShowDemoSite.Controllers
 {
     public class ShowController : Controller
     {
-        // TODO: ensure proper AntiForgeryToken usage.
-        // TODO: add default Index() action ...prolly just redirect home.
-        // TODO: add show repo here.
-        // TODO: add common/standard viewbag variables here (ViewBag.Success = false;) 
+        // TODO: refactor common operations into functions.
+
+        ShowRepository repo = new ShowRepository();
+
+        public ActionResult Index()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
         public ActionResult Create(string title)
         {
             /* The title parameter allows user to pass us the value in the URL.
@@ -21,64 +26,117 @@ namespace tvShowDemoSite.Controllers
             Because we fill out the model with that date, 
             then pass the model to the view, and that will pre-fill the form.
             */
-            ShowModel show = new ShowModel();
-            show.Id = ShowRepository.GenerateId();
-            show.Title = title;
+            ShowModel show = new ShowModel
+            {
+                Id = ShowRepository.GenerateId(),
+                Title = title
+            };
+            
             return View(show);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(ShowModel show)
         {
-            // TODO: handle duplicate key entry (for refresh/resubmit)
-            // ...then also add status notification.
-            ShowRepository repo = new ShowRepository();
-            repo.Insert(show);
-            // only set status code once, for the actual create.
-            // do not send the code again for refresh/resubmits ...send the right status code.
-            Response.StatusCode = 201;
-            ViewBag.Success = true;
+            if (ModelState.IsValid)
+            {
+                if (repo.Get(show.Id) == null)
+                    repo.Insert(show);
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+            
             return View(show);
         }
 
         public ActionResult Read(string id)
         {
-            ShowRepository repo = new ShowRepository();
+            if (id == null)
+            {
+                id = repo.Find(x => x.Title != null, 1)?.First()?.Id;
+                
+                if (id == null) // This should never happen.
+                    throw new ArgumentNullException("Failed to get a fallback Id.");
+            }
+
             ShowModel show = repo.Get(id);
-            return View(show);
+
+            if (show == null)
+                return RedirectToAction("Index", "Home");
+            else
+                return View(show);
         }
 
         public ActionResult Update(string id)
         {
-            ShowRepository repo = new ShowRepository();
+            if (id == null)
+            {
+                id = repo.Find(x => x.Title != null, 1)?.First()?.Id;
+
+                if (id == null) // This should never happen.
+                    throw new ArgumentNullException("Failed to get a fallback Id.");
+            }
+
             ShowModel show = repo.Get(id);
-            return View(show);
+
+            if (show == null)
+                return RedirectToAction("Index", "Home");
+            else
+                return View(show);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Update(ShowModel show)
         {
-            ShowRepository repo = new ShowRepository();
-            repo.Replace(show);
-            // TODO: add status code.
-            ViewBag.Success = true;
+            if (ModelState.IsValid)
+            {
+                if (repo.Get(show.Id) != null)
+                    repo.Replace(show);
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+
             return View(show);
         }
 
         public ActionResult Delete(string id)
         {
-            ShowRepository repo = new ShowRepository();
+            if (id == null)
+            {
+                id = repo.Find(x => x.Title != null, 1)?.First()?.Id;
+
+                if (id == null) // This should never happen.
+                    throw new ArgumentNullException("Failed to get a fallback Id.");
+            }
+
             ShowModel show = repo.Get(id);
-            return View(show);
+
+            if (show == null)
+                return RedirectToAction("Index", "Home");
+            else
+                return View(show);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(ShowModel show)
         {
-            ShowRepository repo = new ShowRepository();
-            repo.Delete(show.Id);
-            ViewBag.Success = true;
+            if (ModelState.IsValid)
+            {
+                if (repo.Get(show.Id) != null)
+                    repo.Delete(show.Id);
+                else
+                    return RedirectToAction("Index", "Home");
+            }
+
             return View(show);
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            // TODO: return exception page.
         }
     }
 }

@@ -34,6 +34,11 @@ namespace tvShowDemoSite.DAL
         /// <param name="databaseName">The database to use (by name).</param>
         public MongoDAL(string connectionString, string databaseName)
         {
+            if (connectionString == null)
+                throw new ArgumentNullException("connectionString");
+            if (databaseName == null)
+                throw new ArgumentNullException("databaseName");
+            
             client = new MongoClient(connectionString);
             database = client.GetDatabase(databaseName);
         }

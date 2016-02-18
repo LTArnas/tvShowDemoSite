@@ -35,22 +35,44 @@ namespace tvShowDemoSite.DAL
         /// <param name="collectionName">Optional. Advanced use only. Name of the MongoDB collection to use.</param>
         public ShowRepository(string collectionName = "Show") : base()
         {
+            if (collectionName == null)
+                throw new ArgumentNullException("collectionName");
+
             collection = database.GetCollection<ShowModel>(collectionName);
         }
 
         public void Insert(ShowModel show)
         {
+            if (show == null)
+                throw new ArgumentNullException("show");
+
             collection.InsertOne(show);
         }
+
         // TODO: Consider converting this function into an index accessor. Repo[string]
         public ShowModel Get(string id)
         {
-            return collection.AsQueryable().First(x => x.Id == id);
+            if (id == null)
+                throw new ArgumentNullException("id");
+            
+            try
+            {
+                return collection.AsQueryable().First(x => x.Id == id);
+            }
+            catch (InvalidOperationException e)
+            {
+                return null;
+            }
         }
 
         public List<ShowModel> Find(Expression<Func<ShowModel, bool>> predicate, int count = 10)
         {
+            if (count < 1)
+                throw new ArgumentOutOfRangeException("count", count, "Value cannot be less than 1.");
+            if (predicate == null)
+                throw new ArgumentNullException("predicate");
             // TODO: Consider applying a max value cap for count argument.
+
             return collection.AsQueryable().Where(predicate).Take(count).ToList();
         }
 
@@ -61,6 +83,9 @@ namespace tvShowDemoSite.DAL
 
         public void Delete(string id)
         {
+            if (id == null)
+                throw new ArgumentNullException("id");
+
             collection.DeleteOne(x => x.Id == id);
         }
     }
