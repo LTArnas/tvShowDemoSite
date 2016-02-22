@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
@@ -18,11 +18,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("TVSDB", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "navbar-form navbar-left", @role = "search" }))
+                {
+                    <div class="form-group">
+                        <input type="text" name="title" value="" class="form-control" placeholder="Title" />
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                }
                 <ul class="nav navbar-nav">
+                    <li>@* TODO: Detailed search. *@</li>
                 </ul>
+                @Html.ActionLink("Create New", "Create", "Show", new { @class = "btn btn-default navbar-btn navbar-right" })
             </div>
         </div>
     </div>
@@ -31,7 +40,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; 2016 - Arnoldas Rudzevicius</p>
         </footer>
     </div>
 
