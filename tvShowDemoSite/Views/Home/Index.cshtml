@@ -12,13 +12,13 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            @Html.ActionLink("Edit", "Update", "Show", new { id = item.Id }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Edit", "Update", "Show", new { id = item.Id }, new { @class = "btn btn-warning btn-block" })
                         </div>
                         <div class="col-xs-6">
                             @Html.ActionLink(@item.Title, "Read", "Show", new { id = item.Id }, new { @class = "btn btn-info btn-block" })
                         </div>
                         <div class="col-xs-3">
-                            @Html.ActionLink("Delete", "Delete", "Show", new { id = item.Id }, new { @class = "btn btn-danger pull-right" })
+                            @Html.ActionLink("Delete", "Delete", "Show", new { id = item.Id }, new { @class = "btn btn-danger btn-block" })
                         </div>
                     </div>
                 </div>
