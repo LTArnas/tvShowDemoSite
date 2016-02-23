@@ -11,14 +11,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-3">
-                            @Html.ActionLink("Edit", "Update", "Show", new { id = item.Id }, new { @class = "btn btn-warning btn-block" })
+                        <div class="col-sm-3">
+                            @Html.ActionLink("Info", "Read", "Show", new { id = item.Id }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("Edit", "Update", "Show", new { id = item.Id }, new { @class = "btn btn-warning" })
                         </div>
-                        <div class="col-xs-6">
-                            @Html.ActionLink(@item.Title, "Read", "Show", new { id = item.Id }, new { @class = "btn btn-info btn-block" })
+                        <div class="col-sm-7 col-sm-pull-1">
+                            <h4 class="text-center">@item.Title</h4>
                         </div>
-                        <div class="col-xs-3">
-                            @Html.ActionLink("Delete", "Delete", "Show", new { id = item.Id }, new { @class = "btn btn-danger btn-block" })
+                        <div class="col-sm-2">
+                            @Html.ActionLink("Delete", "Delete", "Show", new { id = item.Id }, new { @class = "btn btn-danger pull-right" })
                         </div>
                     </div>
                 </div>
