@@ -56,7 +56,7 @@ namespace tvShowDemoSite.Models
         [DisplayName("Network Name")]
         [MinLength(1, ErrorMessage = "Must have at least one character.")]
         public string Network { get; set; }
-        
+
         /// <summary>
         /// Genre(s). Single genre per value.
         /// </summary>
@@ -71,7 +71,7 @@ namespace tvShowDemoSite.Models
         /// Original official language(s).
         /// </summary>
         public List<string> Language { get; set; }
-
+        
         /// <summary>
         /// Total number of official seasons currently released.
         /// Does not include any sort of upcoming season(s).

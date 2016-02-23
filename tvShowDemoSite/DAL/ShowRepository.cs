@@ -32,7 +32,7 @@ namespace tvShowDemoSite.DAL
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="collectionName">Optional. Advanced use only. Name of the MongoDB collection to use.</param>
+        /// <param name="collectionName">Optional. Advanced use only. Name of the MongoDB collection to use. Throws ArgumentNullException on null.</param>
         public ShowRepository(string collectionName = "Show") : base()
         {
             if (collectionName == null)
@@ -41,6 +41,10 @@ namespace tvShowDemoSite.DAL
             collection = database.GetCollection<ShowModel>(collectionName);
         }
 
+        /// <summary>
+        /// Insert new show, 
+        /// </summary>
+        /// <param name="show">The populated data model to insert. Throws ArgumentNullException on null.</param>
         public void Insert(ShowModel show)
         {
             if (show == null)
@@ -50,6 +54,12 @@ namespace tvShowDemoSite.DAL
         }
 
         // TODO: Consider converting this function into an index accessor. Repo[string]
+        /// <summary>
+        /// Returns the show with the given Id, or null if not found.
+        /// Looks for an exact match.
+        /// </summary>
+        /// <param name="id">The Id of the show to find. Throws ArgumentNullException on null.</param>
+        /// <returns>The show, or null if not found.</returns>
         public ShowModel Get(string id)
         {
             if (id == null)
@@ -65,6 +75,12 @@ namespace tvShowDemoSite.DAL
             }
         }
 
+        /// <summary>
+        /// Performs a search with the given predicate. Returns result as a list (empty list when no items found).
+        /// </summary>
+        /// <param name="predicate">The predicate to use when performing the search. Throws ArgumentNullException on null.</param>
+        /// <param name="count">Max number of items to return. Throws ArgumentOutOfRangeException when value is less than one.</param>
+        /// <returns>A list of shows matched by the predicate.</returns>
         public List<ShowModel> Find(Expression<Func<ShowModel, bool>> predicate, int count = 10)
         {
             if (count < 1)
@@ -76,11 +92,20 @@ namespace tvShowDemoSite.DAL
             return collection.AsQueryable().Where(predicate).Take(count).ToList();
         }
 
+        /// <summary>
+        /// Replace an existing show with the given show.
+        /// The show to replace is matched using the Id in the given show.
+        /// </summary>
+        /// <param name="show">The show with the Id and new data to replace.</param>
         public void Replace(ShowModel show)
         {
             collection.ReplaceOne(x => x.Id == show.Id, show);
         }
 
+        /// <summary>
+        /// Deletes an existing show, using Id.
+        /// </summary>
+        /// <param name="id">The Id of the show to delete. Throws ArgumentNullException on null.</param>
         public void Delete(string id)
         {
             if (id == null)
