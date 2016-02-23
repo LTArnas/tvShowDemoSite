@@ -5,7 +5,14 @@
 }
 
 <h2>Delete</h2>
-
+@{
+    if (IsPost && ViewData.ModelState.IsValidField("Id") && ViewBag.Success)
+    {
+        <div class="alert alert-success">
+            <p class="text-success">Success!</p>
+        </div>
+    }
+}
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Show</h4>

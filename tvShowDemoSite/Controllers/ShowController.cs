@@ -42,7 +42,10 @@ namespace tvShowDemoSite.Controllers
             if (ModelState.IsValid)
             {
                 if (repo.Get(show.Id) == null)
+                {
                     repo.Insert(show);
+                    ViewBag.Success = true;
+                }
                 else
                     return RedirectToAction("Index", "Home");
             }
@@ -93,7 +96,10 @@ namespace tvShowDemoSite.Controllers
             if (ModelState.IsValid)
             {
                 if (repo.Get(show.Id) != null)
+                {
                     repo.Replace(show);
+                    ViewBag.Success = true;
+                }
                 else
                     return RedirectToAction("Index", "Home");
             }
@@ -123,10 +129,13 @@ namespace tvShowDemoSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(ShowModel show)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValidField("Id"))
             {
                 if (repo.Get(show.Id) != null)
+                {
                     repo.Delete(show.Id);
+                    ViewBag.Success = true;
+                }
                 else
                     return RedirectToAction("Index", "Home");
             }

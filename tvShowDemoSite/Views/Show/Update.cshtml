@@ -5,7 +5,14 @@
 }
 
 <h2>Update</h2>
-
+@{
+    if (IsPost && ViewData.ModelState.IsValid && ViewBag.Success)
+    {
+        <div class="alert alert-success">
+            <p class="text-success">Success!</p>
+        </div>
+    }
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
