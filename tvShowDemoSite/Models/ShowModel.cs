@@ -25,6 +25,14 @@ namespace tvShowDemoSite.Models
         public string Id { get; set; }
 
         /// <summary>
+        /// URL to poster image (external resource).
+        /// </summary>
+        [DisplayName("Image URL")]
+        [DataType(DataType.ImageUrl)]
+        [Url(ErrorMessage = "URL invalid.")]
+        public string PosterURL { get; set; }
+
+        /// <summary>
         /// Official title of the show, upon original release.
         /// </summary>
         [Required(AllowEmptyStrings = false, ErrorMessage = "Title is required.")]
