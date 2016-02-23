@@ -18,7 +18,7 @@ namespace tvShowDemoSite.Controllers
             List<ShowModel> shows;
 
             if (ModelState.IsValidField("Title"))
-                shows = repo.Find(x => x.Title == show.Title, 100);
+                shows = repo.Find(x => x.Title.Contains(show.Title), 100);
             else
                 shows = repo.Find(x => x.Title != null, 100);
 
