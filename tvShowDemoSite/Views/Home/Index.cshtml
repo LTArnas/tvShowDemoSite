@@ -4,6 +4,46 @@
     ViewBag.Title = "Index";
 }
 
+<!-- Sort and filter sections -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button type="button" data-toggle="collapse" data-target="#sortFilterForm" aria-expanded="false" aria-controls="sortFilterForm" class="btn btn-primary btn-block">
+                    Sort / Filter
+                </button>
+            </div>
+            <div class="panel-body collapse" id="sortFilterForm">
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "" }))
+                {
+                    <fieldset class="form-group">
+                        <legend>Filtering</legend>
+                        <label>Network</label>
+                        @Html.DropDownList("networkFilter", ViewBag.networksList as SelectList, " ", new { @class = "form-control" })
+                    </fieldset>
+
+                    <fieldset class="form-group form-inline">
+                        <legend>Sorting</legend>
+                        <select name="orderBy" class="form-control">
+                            <option value="title" selected>Title</option>
+                            <option value="date">Date</option>
+                            <option value="network">Network Name</option>
+                            <option value="seasons">Total seasons</option>
+                            <option value="episodes">Total episodes</option>
+                        </select>
+                        <div class="form-control">
+                            <label>
+                                @Html.CheckBox("orderAscending", false) Ascending
+                            </label>
+                        </div>
+                    </fieldset>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 @foreach (var item in Model)
 {
     <div class="row">
