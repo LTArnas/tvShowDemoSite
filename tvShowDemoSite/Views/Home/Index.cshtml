@@ -4,7 +4,41 @@
     ViewBag.Title = "Index";
 }
 
-<!-- Sort and filter sections -->
+<!-- Search -->
+@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-horizontal", @role = "search" }))
+{
+    <div class="form-group form-inline">
+        <div class="col-xs-12">
+            <input type="text" name="Title" class="form-control" placeholder="Title" />
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="button" data-toggle="collapse" data-target="#sortFilterForm" aria-expanded="false" aria-controls="sortFilterForm" class="btn btn-primary">
+                Sort / Filter
+            </button>
+        </div>
+    </div>
+    <div class="collapse" id="sortFilterForm">
+        <div class="well">
+            <fieldset class="form-group">
+                <legend>Filtering</legend>
+                <label>Network</label>
+                @Html.DropDownList("networkFilter", ViewBag.networksList as SelectList, " ", new { @class = "form-control" })
+            </fieldset>
+            <fieldset class="form-group form-inline">
+                <legend>Sorting</legend>
+                <select name="orderBy" class="form-control">
+                    <option value="title">Title</option>
+                    <option value="date">Date</option>
+                    <option value="network">Network Name</option>
+                    <option value="seasons">Total seasons</option>
+                    <option value="episodes">Total episodes</option>
+                </select>
+                <label class="form-control-static">Ascending</label>
+                @Html.CheckBox("orderAscending", false, new { @class = "" })
+            </fieldset>
+        </div>
+    </div>
+}
+@*
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-primary">
@@ -16,6 +50,10 @@
             <div class="panel-body collapse" id="sortFilterForm">
                 @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "" }))
                 {
+                    <div class="form-group">
+                        <input type="text" name="Title" class="form-control" placeholder="Title" />
+                    </div>
+
                     <fieldset class="form-group">
                         <legend>Filtering</legend>
                         <label>Network</label>
@@ -43,7 +81,7 @@
         </div>
     </div>
 </div>
-
+    *@
 @foreach (var item in Model)
 {
     <div class="row">
