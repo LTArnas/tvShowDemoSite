@@ -15,7 +15,7 @@ unless the underlining driver throws an exception.
 Need to find out how MongoDB/the C# driver, handles database operation errors/results.
 C# driver docs doesn't seem to note what exceptions get thrown but,
 this might be intentional, 
-if DB operation errors/results are indicated/handled differently.
+if DB operation errors or results are indicated or handled differently.
 Possible that errors are done via WriteConcern, WriteConcernError, etc.
 So, look into write concern, then add safeties here.
 */
@@ -28,7 +28,7 @@ namespace tvShowDemoSite.DAL
     class ShowRepository : MongoDAL
     {
         protected IMongoCollection<ShowModel> collection;
-        
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -54,6 +54,9 @@ namespace tvShowDemoSite.DAL
         }
 
         // TODO: Consider converting this function into an index accessor. Repo[string]
+        // TODO: Consider using two queries (first checking if item exists in db),
+        // instead of using the try-catch method.
+
         /// <summary>
         /// Returns the show with the given Id, or null if not found.
         /// Looks for an exact match.
@@ -64,13 +67,14 @@ namespace tvShowDemoSite.DAL
         {
             if (id == null)
                 throw new ArgumentNullException("id");
-            
+
             try
             {
                 return collection.AsQueryable().First(x => x.Id == id);
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
+                // This exception is thrown if no item is found.
                 return null;
             }
         }
